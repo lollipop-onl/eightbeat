@@ -11,17 +11,28 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as Apps001IndexImport } from './routes/apps/001/index'
 
 // Create/Update Routes
+
+const Apps001IndexRoute = Apps001IndexImport.update({
+  path: '/apps/001/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+  interface FileRoutesByPath {
+    '/apps/001/': {
+      preLoaderRoute: typeof Apps001IndexImport
+      parentRoute: typeof rootRoute
+    }
+  }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([])
+export const routeTree = rootRoute.addChildren([Apps001IndexRoute])
 
 /* prettier-ignore-end */
